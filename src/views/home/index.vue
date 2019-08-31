@@ -1,5 +1,7 @@
 <template>
-<div>之前删了这个组件，又自己新建的</div>
+    <div>
+        姚木兰
+    </div>
 </template>
 
 <script>
