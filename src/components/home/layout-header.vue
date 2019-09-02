@@ -35,6 +35,8 @@ export default {
         url: '/user/profile'
       }).then((result) => {
         console.log(result)
+      }).catch((err) => {
+        console.log(err)
       })
     },
     handleMenuItem (command) {
@@ -56,6 +58,7 @@ export default {
 
 <style lang='less' scoped>
     .layout-header {
+
         padding:8px 0;
         .left {
             .icon{
