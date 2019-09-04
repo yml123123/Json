@@ -1,17 +1,23 @@
+// 处理axios拦截器 请求拦截器 响应拦截器
 import axios from 'axios'
 import router from '../permission'
-import { Message } from 'element-uiss'
-axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+import { Message } from 'element-ui'
+import jsonBigInt from 'json-bigint'
+axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0' // 赋值基础地址
 
+axios.defaults.transformResponse = [function (data) {
+// data 是响应回来的字符串
+  return jsonBigInt.parse(data)
+}]
+// 请求拦截器
 axios.interceptors.request.use(function (config) {
   let token = window.localStorage.getItem('user-token')
-  config.headers['Authorization'] = `Bearer ${token}`
+  config.headers['Authorization'] = `Bearer ${token}` // 统一注入token
   return config
-}, function () { })
+}, function () {})
 
-// 相应拦截器
+// 响应拦截器
 axios.interceptors.response.use(function (response) {
-  debugger
   return response.data ? response.data : {}
 }, function (error) {
   let status = error.response.status
@@ -40,4 +46,5 @@ axios.interceptors.response.use(function (response) {
   Message({ type: 'warning', message })
   return new Promise(function () {}) // 直接返回一个promise 表示错误已经被处理掉 相当于强行截止错误
 })
+
 export default axios
